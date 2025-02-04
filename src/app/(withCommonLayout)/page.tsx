@@ -1,12 +1,12 @@
-import { Button } from '@mui/material';
-import React from 'react';
+import HeroSection from "@/components/UI/HomePage/HeroSection/HeroSection";
+import Specialist from "@/components/UI/HomePage/Specialist/Specialist";
 
 const page = () => {
   return (
-    <div>
-      <h1>Home Page</h1>
-      <Button >Text</Button>
-    </div>
+    <>
+      <HeroSection />
+      <Specialist />
+    </>
   );
 };
 
