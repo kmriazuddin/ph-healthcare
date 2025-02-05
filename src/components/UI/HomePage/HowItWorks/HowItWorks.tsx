@@ -66,8 +66,8 @@ const HowItWorks = () => {
                       fontSize={14}
                       sx={{ mt: 1 }}
                     >
-                      Dolor sit amet consectetur. Scelerisque in eu mauris
-                      volutpat Ornare.
+                      Contact us at ph health care to resolve any of your
+                      issues.
                     </Typography>
                   </Box>
                 </Grid>
@@ -95,8 +95,7 @@ const HowItWorks = () => {
                       fontSize={14}
                       sx={{ mt: 1 }}
                     >
-                      Dolor sit amet consectetur. Scelerisque in eu mauris
-                      volutpat Ornare.
+                      You can get any information from our doctors.
                     </Typography>
                   </Box>
                 </Grid>
@@ -124,8 +123,8 @@ const HowItWorks = () => {
                       fontSize={14}
                       sx={{ mt: 1 }}
                     >
-                      Dolor sit amet consectetur. Scelerisque in eu mauris
-                      volutpat Ornare.
+                      You can schedule an appointment anytime and tell the
+                      problem.
                     </Typography>
                   </Box>
                 </Grid>
@@ -153,8 +152,8 @@ const HowItWorks = () => {
                       fontSize={14}
                       sx={{ mt: 1 }}
                     >
-                      Dolor sit amet consectetur. Scelerisque in eu mauris
-                      volutpat Ornare.
+                      Our doctors will try to solve your problem, he will try
+                      his best.
                     </Typography>
                   </Box>
                 </Grid>

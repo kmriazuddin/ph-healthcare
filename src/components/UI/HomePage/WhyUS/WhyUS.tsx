@@ -8,25 +8,25 @@ const servicesData = [
     imageSrc: assets.svgs.award,
     title: "Award Winning Service",
     description:
-      "Duas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui offici",
+      "People under healthcare, easier, at everyone's fingertips, we are able to reach everyone. So I was able to come to this place with your prayers.",
   },
   {
     imageSrc: assets.svgs.care,
     title: "Best Quality Pregnancy Care",
     description:
-      "Duas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui offici",
+      "Our doctors try to quickly solve any problem related to women's health including pregnancy so that there is no problem.",
   },
   {
     imageSrc: assets.svgs.equipment,
     title: "Complete Medical Equipments",
     description:
-      "Duas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui offici",
+      "Buy Medicines online from home, Authentic medicines with discounts & free home delivery within Dhaka city.",
   },
   {
     imageSrc: assets.svgs.call,
     title: "Dedicated Emergency Care",
     description:
-      "Duas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui offici",
+      "Making healthcare easily accessible anytime, anywhere. Get report at PH Healthcare app within 24 hours.",
   },
 ];
 
