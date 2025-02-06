@@ -13,35 +13,47 @@ import Image from "next/image";
 import assets from "@/assets";
 import Link from "next/link";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { modifyPayload } from "@/utils/modifyPayload";
+import { registerPatient } from "@/services/actions/registerPatient";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 import { userLogin } from "@/services/actions/userLogin";
 import { storeUserInfo } from "@/services/auth.services";
-import { useRouter } from "next/navigation";
 
-export type FormValues = {
+interface IPatientData {
+  name: string;
   email: string;
+  contactNumber: string;
+  address: string;
+}
+
+interface IPatientRegisterFormData {
   password: string;
-};
+  patient: IPatientData;
+}
 
-const Login = () => {
+const Register = () => {
   const router = useRouter();
-
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormValues>();
-  const onSubmit: SubmitHandler<FormValues> = async (values) => {
+  } = useForm<IPatientRegisterFormData>();
+  const onSubmit: SubmitHandler<IPatientRegisterFormData> = async (values) => {
+    const data = modifyPayload(values);
+
     try {
-      const res = await userLogin(values);
-      if (res?.data?.accessToken) {
-        storeUserInfo({ accessToken: res?.data?.accessToken });
-      }
-      if (res?.success === true) {
-        router.push("/");
+      const res = await registerPatient(data);
+      if (res?.data?.id) {
         toast.success(res?.message);
-      } else {
-        toast.error(res?.message);
+        const result = await userLogin({
+          password: values.password,
+          email: values.patient.email,
+        });
+        if (result?.data?.accessToken) {
+          storeUserInfo({ accessToken: result?.data?.accessToken });
+          router.push("/");
+        }
       }
     } catch (error: any) {
       toast.error(error.message);
@@ -65,15 +77,27 @@ const Login = () => {
         >
           <Stack sx={{ justifyContent: "center", alignItems: "center" }}>
             <Box>
-              <Image src={assets.svgs.logo} alt="logo" height={50} width={50} />
+              <Image src={assets.svgs.logo} alt="logo" width={50} height={50} />
             </Box>
             <Box>
-              <Typography>Login PH Healthcare</Typography>
+              <Typography variant="h6" fontWeight={600}>
+                Patient Register
+              </Typography>
             </Box>
           </Stack>
+
           <Box>
             <form onSubmit={handleSubmit(onSubmit)}>
               <Grid container spacing={2} my={1}>
+                <Grid item md={12}>
+                  <TextField
+                    label="Name"
+                    variant="outlined"
+                    size="small"
+                    fullWidth={true}
+                    {...register("patient.name")}
+                  />
+                </Grid>
                 <Grid item md={6}>
                   <TextField
                     label="Email"
@@ -81,7 +105,7 @@ const Login = () => {
                     variant="outlined"
                     size="small"
                     fullWidth={true}
-                    {...register("email")}
+                    {...register("patient.email")}
                   />
                 </Grid>
                 <Grid item md={6}>
@@ -94,20 +118,36 @@ const Login = () => {
                     {...register("password")}
                   />
                 </Grid>
+                <Grid item md={6}>
+                  <TextField
+                    label="Contact Number"
+                    type="tel"
+                    variant="outlined"
+                    size="small"
+                    fullWidth={true}
+                    {...register("patient.contactNumber")}
+                  />
+                </Grid>
+                <Grid item md={6}>
+                  <TextField
+                    label="Address"
+                    type="text"
+                    variant="outlined"
+                    size="small"
+                    fullWidth={true}
+                    {...register("patient.address")}
+                  />
+                </Grid>
               </Grid>
-              <Typography component="p" fontWeight={300} textAlign="end" my={2}>
-                Forgot Password?
-              </Typography>
               <Button
-                type="submit"
                 fullWidth={true}
                 sx={{ margin: "10px 0px" }}
+                type="submit"
               >
-                Login
+                Register
               </Button>
               <Typography component="p" fontWeight={300}>
-                Don&apos;t Have An Account?{" "}
-                <Link href="/register">create an account</Link>
+                Do You Already Have An Account? <Link href="/login">Login</Link>
               </Typography>
             </form>
           </Box>
@@ -117,4 +157,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
