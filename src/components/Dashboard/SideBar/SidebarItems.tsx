@@ -4,8 +4,6 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
-import MailIcon from "@mui/icons-material/Mail";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
 import Link from "next/link";
 import React from "react";
 import { DrawerItem } from "@/types";

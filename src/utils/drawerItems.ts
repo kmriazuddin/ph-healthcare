@@ -5,8 +5,8 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import GroupIcon from "@mui/icons-material/Group";
 import MedicalInformationIcon from "@mui/icons-material/MedicalInformation";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ReviewsIcon from "@mui/icons-material/Reviews";
-import AirlineSeatIndividualSuiteIcon from "@mui/icons-material/AirlineSeatIndividualSuite";
 import TryIcon from "@mui/icons-material/Try";
 
 export const drawerItems = (role: UserRole): DrawerItem[] => {
@@ -24,6 +24,11 @@ export const drawerItems = (role: UserRole): DrawerItem[] => {
           title: "Manage Users",
           path: `${role}/manage-users`,
           icon: GroupIcon,
+        },
+        {
+          title: "My Profile",
+          path: `${role}/profile`,
+          icon: AccountCircleIcon,
         }
       );
       break;
@@ -59,6 +64,11 @@ export const drawerItems = (role: UserRole): DrawerItem[] => {
           title: "Reviews",
           path: `${role}/reviews`,
           icon: ReviewsIcon,
+        },
+        {
+          title: "My Profile",
+          path: `${role}/profile`,
+          icon: AccountCircleIcon,
         }
       );
       break;
@@ -79,6 +89,11 @@ export const drawerItems = (role: UserRole): DrawerItem[] => {
           title: "Appointments",
           path: `${role}/appointment`,
           icon: CalendarMonthIcon,
+        },
+        {
+          title: "My Profile",
+          path: `${role}/profile`,
+          icon: AccountCircleIcon,
         }
       );
       break;
@@ -99,6 +114,11 @@ export const drawerItems = (role: UserRole): DrawerItem[] => {
           title: "Payment History",
           path: `${role}/payment-history`,
           icon: DashboardIcon,
+        },
+        {
+          title: "My Profile",
+          path: `${role}/profile`,
+          icon: AccountCircleIcon,
         }
       );
       break;
