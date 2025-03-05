@@ -12,6 +12,14 @@ import TryIcon from "@mui/icons-material/Try";
 export const drawerItems = (role: UserRole): DrawerItem[] => {
   const roleMenus: DrawerItem[] = [];
 
+  const defaultMenus = [
+    {
+      title: "My Profile",
+      path: `${role}/profile`,
+      icon: AccountCircleIcon,
+    },
+  ];
+
   switch (role) {
     case USER_ROLE.SUPER_ADMIN:
       roleMenus.push(
@@ -24,11 +32,6 @@ export const drawerItems = (role: UserRole): DrawerItem[] => {
           title: "Manage Users",
           path: `${role}/manage-users`,
           icon: GroupIcon,
-        },
-        {
-          title: "My Profile",
-          path: `${role}/profile`,
-          icon: AccountCircleIcon,
         }
       );
       break;
@@ -64,11 +67,6 @@ export const drawerItems = (role: UserRole): DrawerItem[] => {
           title: "Reviews",
           path: `${role}/reviews`,
           icon: ReviewsIcon,
-        },
-        {
-          title: "My Profile",
-          path: `${role}/profile`,
-          icon: AccountCircleIcon,
         }
       );
       break;
@@ -89,11 +87,6 @@ export const drawerItems = (role: UserRole): DrawerItem[] => {
           title: "Appointments",
           path: `${role}/appointment`,
           icon: CalendarMonthIcon,
-        },
-        {
-          title: "My Profile",
-          path: `${role}/profile`,
-          icon: AccountCircleIcon,
         }
       );
       break;
@@ -114,11 +107,6 @@ export const drawerItems = (role: UserRole): DrawerItem[] => {
           title: "Payment History",
           path: `${role}/payment-history`,
           icon: DashboardIcon,
-        },
-        {
-          title: "My Profile",
-          path: `${role}/profile`,
-          icon: AccountCircleIcon,
         }
       );
       break;
@@ -126,5 +114,5 @@ export const drawerItems = (role: UserRole): DrawerItem[] => {
     default:
       break;
   }
-  return [...roleMenus];
+  return [...roleMenus, ...defaultMenus];
 };

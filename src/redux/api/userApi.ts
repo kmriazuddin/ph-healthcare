@@ -10,7 +10,16 @@ export const userApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.user],
     }),
+    updateUser: build.mutation({
+      query: (data) => ({
+        url: "user/update-my-profile",
+        method: "PATCH",
+        data,
+        contentType: "multipart/form-data",
+      }),
+      invalidatesTags: [tagTypes.user],
+    }),
   }),
 });
 
-export const { useGetSingleUserQuery } = userApi;
+export const { useGetSingleUserQuery, useUpdateUserMutation } = userApi;
