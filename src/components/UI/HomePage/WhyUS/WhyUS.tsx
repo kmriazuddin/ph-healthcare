@@ -1,29 +1,33 @@
 import { Box, Container, Grid, Typography } from "@mui/material";
-import assets from "@/assets";
-import chooseUs from "@/assets/choose-us.png";
+// import assets from "@/assets";
+import chooseUsImg from "@/assets/choose-us.png";
+import award from "@/assets/svgs/arrow.svg";
+import care from "@/assets/svgs/care-icon.svg";
+import equipment from "@/assets/svgs/medical-equipment-icon.svg";
+import call from "@/assets/svgs/call-icon.svg";
 import Image from "next/image";
 
 const servicesData = [
   {
-    imageSrc: assets.svgs.award,
+    imageSrc: award,
     title: "Award Winning Service",
     description:
       "People under healthcare, easier, at everyone's fingertips, we are able to reach everyone. So I was able to come to this place with your prayers.",
   },
   {
-    imageSrc: assets.svgs.care,
+    imageSrc: care,
     title: "Best Quality Pregnancy Care",
     description:
       "Our doctors try to quickly solve any problem related to women's health including pregnancy so that there is no problem.",
   },
   {
-    imageSrc: assets.svgs.equipment,
+    imageSrc: equipment,
     title: "Complete Medical Equipments",
     description:
       "Buy Medicines online from home, Authentic medicines with discounts & free home delivery within Dhaka city.",
   },
   {
-    imageSrc: assets.svgs.call,
+    imageSrc: call,
     title: "Dedicated Emergency Care",
     description:
       "Making healthcare easily accessible anytime, anywhere. Get report at PH Healthcare app within 24 hours.",
@@ -182,7 +186,7 @@ const WhyUS = () => {
           </Grid>
           <Grid item md={6} sx={{ display: "flex" }}>
             <Box sx={{ margin: "0 auto", justifyContent: "center" }}>
-              <Image src={chooseUs} alt="choose us" width={400} />
+              <Image src={chooseUsImg} alt="choose us" width={400} />
             </Box>
           </Grid>
         </Grid>

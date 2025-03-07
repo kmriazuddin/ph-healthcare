@@ -1,14 +1,22 @@
-import PHForm from "@/components/Forms/PHForm";
-import PHInput from "@/components/Forms/PHInput";
+/* eslint-disable react-hooks/exhaustive-deps */
+
+import React, { useEffect, useState } from "react";
+
 import PHFullScreenModal from "@/components/Shared/PHModal/PHFullScreenModal";
-import { useGetDoctorQuery } from "@/redux/api/doctorApi";
-import { Box, Button, Grid } from "@mui/material";
+import {
+  useGetDoctorQuery,
+  useUpdateDoctorMutation,
+} from "@/redux/api/doctorApi";
+import PHForm from "@/components/Forms/PHForm";
 import { FieldValues } from "react-hook-form";
-import MultipleSelectFieldChip from "../../schedules/components/MultipleSelectFieldChip";
+import { Button, Grid } from "@mui/material";
+import PHInput from "@/components/Forms/PHInput";
 import PHSelectField from "@/components/Forms/PHSelectField";
 import { Gender } from "@/types";
+import MultipleSelectChip from "./MultipleSelectChip";
 import { useGetAllSpecialtiesQuery } from "@/redux/api/specialtiesApi";
-import { useState } from "react";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 type TProps = {
   open: boolean;
@@ -16,23 +24,92 @@ type TProps = {
   id: string;
 };
 
-const ProfileUpdateModal = ({ open, setOpen, id }: TProps) => {
-  const { data: doctorData } = useGetDoctorQuery(id);
-  const { data: allSpecialties } = useGetAllSpecialtiesQuery(undefined);
+const validationSchema = z.object({
+  experience: z.preprocess(
+    (x) => (x ? x : undefined),
+    z.coerce.number().int().optional()
+  ),
+  appointmentFee: z.preprocess(
+    (x) => (x ? x : undefined),
+    z.coerce.number().int().optional()
+  ),
+  name: z.string().optional(),
+  contactNumber: z.string().optional(),
+  registrationNumber: z.string().optional(),
+  gender: z.string().optional(),
+  qualification: z.string().optional(),
+  currentWorkingPlace: z.string().optional(),
+  designation: z.string().optional(),
+});
 
+const ProfileUpdateModal = ({ open, setOpen, id }: TProps) => {
+  const { data: doctorData, refetch, isSuccess } = useGetDoctorQuery(id);
+  const { data: allSpecialties } = useGetAllSpecialtiesQuery(undefined);
   const [selectedSpecialtiesIds, setSelectedSpecialtiesIds] = useState([]);
 
-  const submitHandler = async (value: FieldValues) => {
-    const specialties = allSpecialties.map((specialtiesId: string) => ({
+  const [updateDoctor, { isLoading: updating }] = useUpdateDoctorMutation();
+
+  useEffect(() => {
+    if (!isSuccess) return;
+
+    setSelectedSpecialtiesIds(
+      doctorData?.doctorSpecialties.map((sp: any) => {
+        return sp.specialtiesId;
+      })
+    );
+  }, [isSuccess]);
+
+  const submitHandler = async (values: FieldValues) => {
+    const specialties = selectedSpecialtiesIds.map((specialtiesId: string) => ({
       specialtiesId,
       isDeleted: false,
     }));
+
+    console.log({ id });
+    // return;
+
+    const excludedFields: Array<keyof typeof values> = [
+      "email",
+      "id",
+      "role",
+      "needPasswordChange",
+      "status",
+      "createdAt",
+      "updatedAt",
+      "isDeleted",
+      "averageRating",
+      "review",
+      "profilePhoto",
+      "registrationNumber",
+      "schedules",
+      "doctorSpecialties",
+    ];
+
+    const updatedValues = Object.fromEntries(
+      Object.entries(values).filter(([key]) => {
+        return !excludedFields.includes(key);
+      })
+    );
+
+    updatedValues.specialties = specialties;
+
+    try {
+      updateDoctor({ body: updatedValues, id });
+      await refetch();
+      setOpen(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <PHFullScreenModal open={open} setOpen={setOpen} title="Update Profile">
-      <PHForm onSubmit={submitHandler} defaultValues={doctorData}>
-        <Grid container spacing={2} my={2}>
+      <PHForm
+        onSubmit={submitHandler}
+        defaultValues={doctorData}
+        resolver={zodResolver(validationSchema)}
+      >
+        <Grid container spacing={2} sx={{ my: 5 }}>
           <Grid item xs={12} sm={12} md={4}>
             <PHInput name="name" label="Name" sx={{ mb: 2 }} fullWidth />
           </Grid>
@@ -84,9 +161,9 @@ const ProfileUpdateModal = ({ open, setOpen, id }: TProps) => {
           </Grid>
           <Grid item xs={12} sm={12} md={4}>
             <PHInput
-              name="apointmentFee"
+              name="appointmentFee"
               type="number"
-              label="ApointmentFee"
+              label="AppointmentFee"
               sx={{ mb: 2 }}
               fullWidth
             />
@@ -117,14 +194,17 @@ const ProfileUpdateModal = ({ open, setOpen, id }: TProps) => {
             />
           </Grid>
           <Grid item xs={12} sm={12} md={4}>
-            <MultipleSelectFieldChip
+            <MultipleSelectChip
               allSpecialties={allSpecialties}
               selectedIds={selectedSpecialtiesIds}
               setSelectedIds={setSelectedSpecialtiesIds}
             />
           </Grid>
         </Grid>
-        <Button type="submit">Update</Button>
+
+        <Button type="submit" disabled={updating}>
+          Save
+        </Button>
       </PHForm>
     </PHFullScreenModal>
   );

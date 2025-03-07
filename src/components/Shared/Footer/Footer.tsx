@@ -1,9 +1,9 @@
 import { Box, Container, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import facebookIcon from "@/assets/landing_page/facebook.png";
-import linkedinIcon from "@/assets/landing_page/linkedin.png";
-import twitterIcon from "@/assets/landing_page/twitter.png";
 import instagramIcon from "@/assets/landing_page/instagram.png";
+import twitterIcon from "@/assets/landing_page/twitter.png";
+import linkedinIcon from "@/assets/landing_page/linkedin.png";
 import Link from "next/link";
 
 const Footer = () => {

@@ -52,7 +52,7 @@ const TopRatedDoctors = async () => {
                   }}
                 >
                   <Image
-                    src={doctor?.profilePhoto}
+                    src={doctor?.profilePhoto || "https://i.ibb.co.com/GvsyLqQ/avatar.png"}
                     alt="doctor"
                     width={500}
                     height={100}
